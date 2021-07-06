@@ -36,7 +36,7 @@ public class CraftableBundle extends JavaPlugin implements CommandExecutor, TabC
             getServer().addRecipe(bundleRecipe);
         }
 
-        getCommand("craftingbundle").setExecutor(this);
+        getCommand("craftablebundle").setExecutor(this);
 
         System.out.println("[" + getDescription().getName() + "]" + " Plugin was successfully loaded!");
 
