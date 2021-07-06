@@ -1,0 +1,10 @@
+  name: CraftableBundle
+  main: com.katanamajesty.CraftableBundle
+  version: ${version}
+  description: Добавляет крафт мешков из 1.18
+  api-version: 1.17
+  commands:
+    craftingbundle:
+      description: позволяет перезагружать плагин
+      aliases:
+        - cbundle

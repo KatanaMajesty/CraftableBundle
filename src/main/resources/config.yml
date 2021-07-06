@@ -1,0 +1,5 @@
+# BundleEnabled needs server restart, bruh... at least for now
+BundleEnabled: true
+NoPermission: '&cNot enough permissions!'
+ConfigReloaded: '&aConfig has been successfully reloaded!'
+UnknownCommands: '&cUnknown command!'
