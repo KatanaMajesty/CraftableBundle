@@ -1,4 +1,4 @@
-# BundleEnabled needs server restart, bruh... at least for now
+# BundleEnabled won't need restart anymore! Hell yeah!!!
 BundleEnabled: true
 NoPermission: '&cNot enough permissions!'
 ConfigReloaded: '&aConfig has been successfully reloaded!'

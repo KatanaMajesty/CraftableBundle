@@ -7,6 +7,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -17,26 +20,27 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @SuppressWarnings({"unused", "ConstantConditions"})
-public class CraftableBundle extends JavaPlugin implements CommandExecutor, TabCompleter {
+public class CraftableBundle extends JavaPlugin implements CommandExecutor, TabCompleter, Listener {
 
     @Override
     public void onEnable() {
-
         getConfig().options().copyDefaults(true);
         saveDefaultConfig();
+        saveConfig();
 
-        if (getConfig().getBoolean("BundleEnabled")) {
-            ItemStack bundle = new ItemStack(Material.BUNDLE);
-            NamespacedKey key = new NamespacedKey(this, getDescription().getName());
-            ShapedRecipe bundleRecipe = new ShapedRecipe(key, bundle);
+        ItemStack bundle = new ItemStack(Material.BUNDLE);
+        NamespacedKey key = new NamespacedKey(this, "bundle");
+        ShapedRecipe bundleRecipe = new ShapedRecipe(key, bundle);
 
-            bundleRecipe.shape("*%*", "% %", "%%%");
-            bundleRecipe.setIngredient('*', Material.STRING);
-            bundleRecipe.setIngredient('%', Material.RABBIT_HIDE);
-            getServer().addRecipe(bundleRecipe);
-        }
+        bundleRecipe.shape("*%*", "% %", "%%%");
+        bundleRecipe.setIngredient('*', Material.STRING);
+        bundleRecipe.setIngredient('%', Material.RABBIT_HIDE);
+
+        getServer().addRecipe(bundleRecipe);
 
         getCommand("craftablebundle").setExecutor(this);
+
+        getServer().getPluginManager().registerEvents(this, this);
 
         System.out.println("[" + getDescription().getName() + "]" + " Plugin was successfully loaded!");
 
@@ -81,4 +85,18 @@ public class CraftableBundle extends JavaPlugin implements CommandExecutor, TabC
         commandList.add("version");
         return commandList.stream().sorted(Comparator.naturalOrder()).collect(Collectors.toList());
     }
+
+    @EventHandler
+    public void onBundleCraft(PrepareItemCraftEvent event) {
+
+        if (!getConfig().getBoolean("BundleEnabled")) {
+            if (event.getRecipe() != null) {
+                if (event.getRecipe().getResult().isSimilar(new ItemStack(Material.BUNDLE))) {
+                    event.getInventory().setResult(new ItemStack(Material.AIR));
+                }
+            }
+        }
+
+    }
+
 }
