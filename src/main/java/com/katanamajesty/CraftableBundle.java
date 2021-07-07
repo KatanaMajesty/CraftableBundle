@@ -53,11 +53,11 @@ public class CraftableBundle extends JavaPlugin implements CommandExecutor, TabC
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        String noPerm = ChatColor.translateAlternateColorCodes('&', getConfig().getString("NoPermission"));
+        String noPerm = colorFormat(getConfig().getString("NoPermission"));
         if (args.length == 1 && "reload".equals(args[0])) {
             if (sender.hasPermission("craftablebundle.reload")) {
                 reloadConfig();
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', getConfig().getString("ConfigReloaded")));
+                sender.sendMessage(colorFormat(getConfig().getString("ConfigReloaded")));
                 return true;
             } else {
                 sender.sendMessage(noPerm);
@@ -73,7 +73,7 @@ public class CraftableBundle extends JavaPlugin implements CommandExecutor, TabC
                 return false;
             }
         } else {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', getConfig().getString("UnknownCommands")));
+            sender.sendMessage(colorFormat(getConfig().getString("UnknownCommands")));
             return false;
         }
     }
@@ -97,6 +97,11 @@ public class CraftableBundle extends JavaPlugin implements CommandExecutor, TabC
             }
         }
 
+    }
+
+    public String colorFormat(String s) {
+        ChatColor.translateAlternateColorCodes('&',s);
+        return s;
     }
 
 }
