@@ -100,7 +100,7 @@ public class CraftableBundle extends JavaPlugin implements CommandExecutor, TabC
     }
 
     public String colorFormat(String s) {
-        ChatColor.translateAlternateColorCodes('&',s);
+        s = ChatColor.translateAlternateColorCodes('&',s);
         return s;
     }
 
